@@ -1,0 +1,53 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Fyyur | Venues{% endblock %}
+{% block content %}
+
+{% for area in areas_distinct%}
+<h3>{{area.city}}, {{area.state}}</h3>
+<ul class="items">
+	{% for d in data%}
+		{% if d.city == area.city and d.state == area.state%}
+			{% for d1 in d.venues%}
+				<li class="artist-venue" style="position: relative;">
+					<a href="/venues/{{d1.id}}" class="">
+						<i class="fas fa-music"></i>
+						<div class="item">
+							<h5>{{d1.name}}</h5>
+						</div>
+					</a>
+					<div class="" style="z-index:1000;position: absolute; right: 50%; top:0; color:red">
+						<form action="/venues/{{d1.id}}/edit" method="get" style="display:inline-block">
+							<input type="submit" name="" value="&#9997;" style="border: none; background-color: transparent;">
+						</form>
+						<div data-id = "{{d1.id}}" class="cross-symbol" style="display:inline-block">
+							&#10060;
+						</div>
+
+					</div>
+				</li>
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+</ul>
+{% endfor %}
+<script type="text/javascript">
+	var cross = document.getElementsByClassName("cross-symbol")
+	for (var i = 0; i < cross.length; i++) {
+		cross[i].onclick = function () {
+			var venue_id = parseInt(this.dataset.id)
+			fetch('/venues/' + venue_id , {
+				method: 'DELETE',
+				body: JSON.stringify({
+					'id' : venue_id
+				}),
+				headers: {
+					'Content-Type' : 'application/json'
+				}
+			})
+			.then(function () {
+				window.location.replace("/");
+			})
+		}
+	}
+</script>
+{% endblock %}

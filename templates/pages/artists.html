@@ -1,0 +1,46 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Fyyur | Artists{% endblock %}
+{% block content %}
+<ul class="items">
+	{% for artist in artists %}
+	<li class="artist-venue" style="position: relative; display:block; width: 45%">
+		<a href="/artists/{{ artist.id }}">
+			<i class="fas fa-users"></i>
+			<div class="item">
+				<h5>{{ artist.name }}</h5>
+			</div>
+		</a>
+		<div class="" style="z-index:1000;position: absolute; right: -10px; top:0; color:red">
+			<form action="/artists/{{artist.id}}/edit" method="get" style="display:inline-block">
+				<input type="submit" name="" value="&#9997;" style="border: none; background-color: transparent;">
+			</form>
+			<div data-id = "{{artist.id}}" class="cross-symbol" style="display:inline-block">
+				&#10060;
+			</div>
+		</div>
+	</li>
+	{% endfor %}
+</ul>
+<script type="text/javascript">
+	var cross = document.getElementsByClassName("cross-symbol")
+	var edit = document.getElementsByClassName("edit-symbol")
+	for (var i = 0; i < cross.length; i++) {
+		cross[i].onclick = function () {
+			var artist_id = parseInt(this.dataset.id)
+			fetch('/artists/' + artist_id , {
+				method: 'DELETE',
+				body: JSON.stringify({
+					'id' : artist_id
+				}),
+				headers: {
+					'Content-Type' : 'application/json'
+				}
+			})
+			.then(function () {
+				window.location.replace("/");
+			})
+		}
+	}
+
+</script>
+{% endblock %}
