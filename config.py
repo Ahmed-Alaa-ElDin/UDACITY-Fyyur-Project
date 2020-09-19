@@ -10,6 +10,6 @@ DEBUG = True
 
 
 # TODO IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:Ahmed1000@localhost:5432/fyyur'
+SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:aaass123@localhost:5432/fyyur'
 
 # basedir.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
